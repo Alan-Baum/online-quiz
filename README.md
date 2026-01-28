@@ -56,7 +56,7 @@ The application is easy to navigate, visually clear, and designed with usability
 ---
 
 ## File Structure
-```
+
 ONLINE-QUIZ/
 │
 ├── index.html
@@ -64,10 +64,10 @@ ONLINE-QUIZ/
 ├── README.md
 │
 ├── css/
-│   └── style.css
+│ └── style.css
 └── js/
-    └── main.js
-```
+└── main.js
+
 
 ---
 
@@ -90,13 +90,40 @@ ONLINE-QUIZ/
 
 ---
 
+## Code Validation & Quality Checks
+
+### HTML Validation
+Both `index.html` and `how-to.html` were validated using the W3C Markup Validator at https://validator.w3.org.  
+- **index.html:** No errors or warnings found.  
+- **how-to.html:** Fixed a validation error by replacing a `<button>` inside an `<a>` with a styled `<a>` link. No further errors or warnings remain.
+
+### CSS Validation
+The CSS file (`style.css`) was validated at http://jigsaw.w3.org/css-validator/.  
+- No syntax errors or warnings were found.  
+- The `.start-btn` class was added for the How-To page link.
+
+### JavaScript Validation
+The JavaScript file (`main.js`) was checked at https://jshint.com/ with configuration:
+```js
+/* jshint esversion: 6 */
+/* jshint browser: true */
+
+```
+### Validation Fix Summary
+- Corrected HTML5 void elements (removed trailing slashes on <meta>).
+- Removed unnecessary role="main" from <main>.
+- Fixed invalid <button> inside <a> on How-To page by using a styled <a>.
+- After these fixes, all code passes HTML, CSS, and JavaScript validation with no errors.
+
+---
+
 ## Deployment
-The project is deployed using **GitHub Pages**.
+The project is deployed using GitHub Pages.
 
 **Deployment steps:**
 1. Push the project to a GitHub repository.
 2. Go to **Settings → Pages**.
-3. Select the `main` (or `master`) branch as the source.
+3. Select the main (or master) branch as the source.
 4. Save to generate the live project URL.
 
 ---
@@ -104,4 +131,3 @@ The project is deployed using **GitHub Pages**.
 ## Author
 **Alan Baum**  
 Online Quiz – Project 1
-
