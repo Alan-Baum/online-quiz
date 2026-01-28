@@ -85,6 +85,8 @@ ONLINE-QUIZ/
 - Verified score increments correctly
 - Verified quiz restart resets score
 - Verified navigation between pages works correctly
+- Verified answer buttons disable after selection
+- Verified correct answer is highlighted and feedback is displayed
 
 ---
 
