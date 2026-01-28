@@ -1,141 +1,100 @@
-// ==============================
-// DOM Elements
-// ==============================
+/* jshint esversion: 6 */
+/* jshint browser: true */
 
-const questionElement = document.querySelector(".question");
-const answerButtons = document.querySelectorAll(".answers button");
-const feedback = document.querySelector(".feedback");
-const nextButton = document.querySelector(".next-btn");
-const scoreElement = document.querySelector(".score");
-const restartButton = document.querySelector(".restart-btn");
+// ================================
+// Online Quiz – main.js
+// Handles question loading, user answers, score tracking, and feedback
+// ================================
 
-// ==============================
-// Quiz Data
-// ==============================
-
-const quizData = [
+// Example questions array
+const questions = [
   {
     question: "What does HTML stand for?",
-    answers: [
-      "Hyper Text Markup Language",
-      "High Text Machine Language",
-      "Hyperlinks and Text Markup Language",
-      "Home Tool Markup Language"
-    ],
-    correct: 0
+    options: ["Hyper Text Markup Language", "High Text Markup Language", "Hyperlinks and Text Markup Language"],
+    answer: 0
   },
   {
     question: "Which language is used for styling web pages?",
-    answers: ["HTML", "JQuery", "CSS", "XML"],
-    correct: 2
+    options: ["HTML", "JQuery", "CSS", "XML"],
+    answer: 2
   },
   {
-    question: "Which is not a JavaScript data type?",
-    answers: ["Number", "String", "Boolean", "Float"],
-    correct: 3
+    question: "Inside which HTML element do we put the JavaScript?",
+    options: ["<js>", "<scripting>", "<script>", "<javascript>"],
+    answer: 2
   }
 ];
 
-// ==============================
-// Quiz State
-// ==============================
-
-let currentQuestion = 0;
+// Quiz state variables
+let currentQuestionIndex = 0;
 let score = 0;
 
-// ==============================
-// Utility: Shuffle Questions
-// ==============================
+// Select DOM elements
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const nextBtn = document.getElementById("next-btn");
+const restartBtn = document.getElementById("restart-btn");
+const scoreEl = document.getElementById("score");
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+// Load a question
+const loadQuestion = () => {
+  const currentQuestion = questions[currentQuestionIndex];
+  questionEl.textContent = currentQuestion.question;
+  optionsEl.innerHTML = "";
+
+  currentQuestion.options.forEach((option, index) => {
+    const button = document.createElement("button");
+    button.textContent = option;
+    button.className = "option-btn";
+    button.addEventListener("click", () => selectAnswer(index));
+    optionsEl.appendChild(button);
+  });
+};
+
+// Handle answer selection
+const selectAnswer = (selectedIndex) => {
+  const currentQuestion = questions[currentQuestionIndex];
+  if (selectedIndex === currentQuestion.answer) {
+    score++;
+    alert("Correct!");
+  } else {
+    alert(`Wrong! The correct answer is "${currentQuestion.options[currentQuestion.answer]}".`);
   }
-}
+  disableOptions();
+};
 
-// ==============================
-// Load Question
-// ==============================
+// Disable option buttons after selection
+const disableOptions = () => {
+  const buttons = optionsEl.querySelectorAll("button");
+  buttons.forEach((btn) => (btn.disabled = true));
+};
 
-function loadQuestion() {
-  const current = quizData[currentQuestion];
-
-  questionElement.textContent = current.question;
-  feedback.textContent = "";
-  nextButton.style.display = "none";
-
-  answerButtons.forEach((button, index) => {
-    button.textContent = current.answers[index];
-    button.disabled = false;
-    button.style.backgroundColor = "";
-  });
-}
-
-// ==============================
-// Answer Selection
-// ==============================
-
-answerButtons.forEach((button, index) => {
-  button.addEventListener("click", () => {
-    const correctIndex = quizData[currentQuestion].correct;
-
-    // Disable all buttons after selection
-    answerButtons.forEach(btn => btn.disabled = true);
-
-    // Highlight correct answer only (accent colour)
-    answerButtons[correctIndex].style.backgroundColor = "#4CAF50";
-
-    if (index === correctIndex) {
-      feedback.textContent = "Correct!";
-    } else {
-      feedback.textContent = "Wrong!";
-    }
-
-    feedback.style.color = "#333";
-
-    score += index === correctIndex ? 1 : 0;
-    scoreElement.textContent = `Score: ${score}`;
-
-    nextButton.style.display = "inline-block";
-  });
-});
-
-
-// ==============================
-// Next Question
-// ==============================
-
-nextButton.addEventListener("click", () => {
-  currentQuestion++;
-
-  if (currentQuestion < quizData.length) {
+// Move to next question
+nextBtn.addEventListener("click", () => {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
     loadQuestion();
   } else {
-    questionElement.textContent = "Quiz complete!";
-    feedback.textContent = `Final score: ${score} / ${quizData.length}`;
-    nextButton.style.display = "none";
-    restartButton.style.display = "inline-block";
+    showScore();
   }
 });
 
-// ==============================
-// Restart Quiz
-// ==============================
+// Show final score
+const showScore = () => {
+  questionEl.textContent = `Quiz Finished! Your score is ${score} out of ${questions.length}.`;
+  optionsEl.innerHTML = "";
+  nextBtn.style.display = "none";
+  restartBtn.style.display = "inline-block";
+};
 
-restartButton.addEventListener("click", () => {
-  currentQuestion = 0;
+// Restart quiz
+restartBtn.addEventListener("click", () => {
+  currentQuestionIndex = 0;
   score = 0;
-  scoreElement.textContent = "Score: 0";
-  restartButton.style.display = "none";
-  shuffle(quizData);
+  nextBtn.style.display = "inline-block";
+  restartBtn.style.display = "none";
   loadQuestion();
 });
 
-// ==============================
-// Initialise Quiz
-// ==============================
-
-shuffle(quizData);
+// Initialize quiz
 loadQuestion();
-
