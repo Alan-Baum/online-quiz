@@ -131,3 +131,4 @@ The project is deployed using GitHub Pages.
 ## Author
 **Alan Baum**  
 Online Quiz – Project 1
+

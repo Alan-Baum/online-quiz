@@ -1,100 +1,122 @@
 /* jshint esversion: 6 */
 /* jshint browser: true */
 
-// ================================
-// Online Quiz – main.js
-// Handles question loading, user answers, score tracking, and feedback
-// ================================
+const questionEl = document.getElementById("question");
+const answerButtonsEl = document.getElementById("answer-buttons");
+const scoreEl = document.getElementById("score");
+const feedbackEl = document.getElementById("feedback");
+const restartBtn = document.getElementById("restart-btn");
 
-// Example questions array
-const questions = [
-  {
-    question: "What does HTML stand for?",
-    options: ["Hyper Text Markup Language", "High Text Markup Language", "Hyperlinks and Text Markup Language"],
-    answer: 0
-  },
-  {
-    question: "Which language is used for styling web pages?",
-    options: ["HTML", "JQuery", "CSS", "XML"],
-    answer: 2
-  },
-  {
-    question: "Inside which HTML element do we put the JavaScript?",
-    options: ["<js>", "<scripting>", "<script>", "<javascript>"],
-    answer: 2
-  }
-];
-
-// Quiz state variables
 let currentQuestionIndex = 0;
 let score = 0;
 
-// Select DOM elements
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("next-btn");
-const restartBtn = document.getElementById("restart-btn");
-const scoreEl = document.getElementById("score");
-
-// Load a question
-const loadQuestion = () => {
-  const currentQuestion = questions[currentQuestionIndex];
-  questionEl.textContent = currentQuestion.question;
-  optionsEl.innerHTML = "";
-
-  currentQuestion.options.forEach((option, index) => {
-    const button = document.createElement("button");
-    button.textContent = option;
-    button.className = "option-btn";
-    button.addEventListener("click", () => selectAnswer(index));
-    optionsEl.appendChild(button);
-  });
-};
-
-// Handle answer selection
-const selectAnswer = (selectedIndex) => {
-  const currentQuestion = questions[currentQuestionIndex];
-  if (selectedIndex === currentQuestion.answer) {
-    score++;
-    alert("Correct!");
-  } else {
-    alert(`Wrong! The correct answer is "${currentQuestion.options[currentQuestion.answer]}".`);
+const questions = [
+  {
+    question: "What does HTML stand for?",
+    answers: [
+      { text: "Hyper Text Markup Language", correct: true },
+      { text: "Home Tool Markup Language", correct: false },
+      { text: "Hyperlinks and Text Markup Language", correct: false }
+    ]
+  },
+  {
+    question: "Which language is used for styling web pages?",
+    answers: [
+      { text: "HTML", correct: false },
+      { text: "CSS", correct: true },
+      { text: "JavaScript", correct: false }
+    ]
+  },
+  {
+    question: "Which language is used for web page interactivity?",
+    answers: [
+      { text: "HTML", correct: false },
+      { text: "CSS", correct: false },
+      { text: "JavaScript", correct: true }
+    ]
   }
-  disableOptions();
-};
+];
 
-// Disable option buttons after selection
-const disableOptions = () => {
-  const buttons = optionsEl.querySelectorAll("button");
-  buttons.forEach((btn) => (btn.disabled = true));
-};
-
-// Move to next question
-nextBtn.addEventListener("click", () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    loadQuestion();
-  } else {
-    showScore();
-  }
-});
-
-// Show final score
-const showScore = () => {
-  questionEl.textContent = `Quiz Finished! Your score is ${score} out of ${questions.length}.`;
-  optionsEl.innerHTML = "";
-  nextBtn.style.display = "none";
-  restartBtn.style.display = "inline-block";
-};
-
-// Restart quiz
-restartBtn.addEventListener("click", () => {
+function startQuiz() {
+  questions.sort(() => Math.random() - 0.5);
   currentQuestionIndex = 0;
   score = 0;
-  nextBtn.style.display = "inline-block";
+  scoreEl.textContent = `Score: ${score}`;
+  feedbackEl.textContent = "";
   restartBtn.style.display = "none";
-  loadQuestion();
-});
+  showQuestion();
+}
 
-// Initialize quiz
-loadQuestion();
+function showQuestion() {
+  resetState();
+  const currentQuestion = questions[currentQuestionIndex];
+  questionEl.textContent = currentQuestion.question;
+
+  currentQuestion.answers.forEach(answer => {
+    const button = document.createElement("button");
+    button.textContent = answer.text;
+    if (answer.correct) {
+      button.dataset.correct = answer.correct;
+    }
+    button.addEventListener("click", selectAnswer);
+    answerButtonsEl.appendChild(button);
+  });
+}
+
+function resetState() {
+  while (answerButtonsEl.firstChild) {
+    answerButtonsEl.removeChild(answerButtonsEl.firstChild);
+  }
+  feedbackEl.textContent = "";
+}
+
+function selectAnswer(e) {
+  const selectedButton = e.target;
+  const correct = selectedButton.dataset.correct === "true";
+
+  Array.from(answerButtonsEl.children).forEach(button => {
+    setStatusClass(button, button.dataset.correct === "true");
+  });
+
+  if (correct) {
+    score++;
+    feedbackEl.textContent = "Correct!";
+  } else {
+    feedbackEl.textContent = "Wrong answer.";
+  }
+
+  scoreEl.textContent = `Score: ${score}`;
+
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    setTimeout(showQuestion, 1000);
+  } else {
+    setTimeout(showFinalScore, 500);
+  }
+}
+
+function setStatusClass(button, correct) {
+  clearStatusClass(button);
+  if (correct) {
+    button.classList.add("correct");
+  } else {
+    button.classList.add("wrong");
+  }
+}
+
+function clearStatusClass(button) {
+  button.classList.remove("correct");
+  button.classList.remove("wrong");
+}
+
+function showFinalScore() {
+  resetState();
+  scoreEl.textContent = "";
+  questionEl.textContent = `Your final score is ${score} out of ${questions.length}.`;
+  restartBtn.style.display = "inline-block";
+}
+
+restartBtn.addEventListener("click", startQuiz);
+
+// Start quiz
+startQuiz();
