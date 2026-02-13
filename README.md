@@ -1,57 +1,49 @@
-# Online Quiz – Web Basics Check
-
+Online Quiz – Web Basics Check
 ## Project Overview
-This project is an interactive online quiz web application designed to test a user’s knowledge of basic web technologies. Users answer a series of multiple-choice questions, receive instant feedback, and are shown a final score at the end of the quiz.
 
-The project demonstrates the use of HTML, CSS, and JavaScript to build a responsive, accessible, front-end web application with meaningful user interaction.
+This project is an interactive online quiz web application designed to test a user’s knowledge of fundamental web technologies. Users answer multiple-choice questions, receive immediate visual feedback, and are shown a final score at the end of the quiz.
 
----
+The project demonstrates practical use of HTML, CSS, and JavaScript to build a responsive and accessible front-end application with clear structure and separation of concerns.
 
-## Purpose & Value to the User
-The quiz provides users with:
-- A simple and engaging way to test their understanding of web fundamentals
-- Immediate feedback after each question
-- A clear final score to measure performance
+## Purpose
 
-The application is easy to navigate, visually clear, and designed with usability and accessibility in mind.
+Test understanding of web fundamentals
 
----
+Provide instant feedback
+
+Display a final score out of 10
+
+Allow repeat attempts with reshuffled questions
 
 ## Features
-- Multiple-choice quiz questions
-- Questions loaded in a random order on each attempt
-- Instant feedback (“Correct” / “Wrong”) after selecting an answer
-- Score tracking throughout the quiz
-- Final score summary at the end
-- Restart functionality to retake the quiz
-- Dedicated **How-To** page explaining how the quiz works
 
----
+10 multiple-choice questions
 
-## How to Use
-1. Open the **How To** page to read the quiz instructions.
-2. Click **Start Quiz** to begin.
-3. Read each question and select one answer.
-4. View feedback for each question.
-5. Questions advance automatically after selecting an answer.
-6. At the end of the quiz, view your final score.
-7. Click **Restart** to try again.
+Questions load in a random order on each attempt
 
----
+Strict answer mode:
+
+Selected answer turns green if correct
+
+Selected answer turns red if incorrect
+
+Correct answers are not revealed when an incorrect option is chosen
+
+Automatic progression between questions
+
+Real-time score tracking
+
+Restart button reshuffles questions
 
 ## Technologies Used
-- **HTML5** – structure and content
-- **CSS3** – layout, styling, and responsive design
-- **JavaScript (ES6)** – quiz logic, interactivity, score tracking, and randomisation
 
----
+HTML5 – Semantic structure
 
-## Accessibility & UX Considerations
-- Clear heading hierarchy and readable text
-- High contrast between text and background colours
-- Buttons clearly labelled and provide visual feedback
-- Logical navigation and predictable interactions
-- Mobile-friendly layout using responsive design principles
+CSS3 – Layout and responsive styling
+
+JavaScript (ES6) – Quiz logic, scoring, validation, and randomisation
+
+No external libraries were used.
 
 ---
 
@@ -70,90 +62,114 @@ ONLINE-QUIZ/
 ---
 
 ## Code Quality
-- All HTML and CSS written manually and structured clearly
-- JavaScript code organised into logical sections with clear variable naming
-- No external libraries were used
-- File names are lowercase and descriptive
-- Code is separated by responsibility (HTML / CSS / JS)
 
----
+All HTML and CSS written manually and structured clearly
+
+JavaScript organised into logical sections with clear variable naming
+
+No external libraries were used
+
+File names are lowercase and descriptive
+
+Code separated by responsibility (HTML / CSS / JS)
 
 ## Testing
 
-### 1️⃣ HTML Validation
-- Tool used: [W3C Markup Validator](https://validator.w3.org/)  
-- Files checked: `index.html` and `how-to.html`  
-- Outcome:  
-  - `index.html`: No errors or warnings  
-  - `how-to.html`: No errors or warnings (fixed invalid `<button>` inside `<a>` earlier)  
-- Notes: All HTML elements are semantic and correctly nested.  
+The project was validated and manually tested to ensure correct functionality and standards compliance.
 
-### 2️⃣ CSS Validation
-- Tool used: [W3C CSS Validator](http://jigsaw.w3.org/css-validator/)  
-- File checked: `css/style.css`  
-- Outcome: No errors or warnings  
-- Notes: Styling is consistent, uses a maximum of three colors (grey, black, green, with blue for links), and all classes are valid.  
+## HTML Validation
 
-### 3️⃣ JavaScript Validation
-- Tool used: [JSHint](https://jshint.com/)  
-```js
+Tool used: W3C Markup Validator
+
+Files checked: index.html, how-to.html
+
+Outcome:
+
+index.html: No errors or warnings
+
+how-to.html: No errors or warnings
+
+All HTML elements are semantic and correctly nested.
+
+## CSS Validation
+
+Tool used: W3C CSS Validator
+
+File checked: css/style.css
+
+Outcome:
+
+No errors or warnings
+
+Styling is consistent and all classes are valid.
+
+## JavaScript Validation
+
+Tool used: JSHint
+
+Configuration used:
+
 /* jshint esversion: 6 */
 /* jshint browser: true */
 
+
 File checked: js/main.js
 
-Outcome: No syntax errors; all variables and functions properly defined
+Outcome:
 
-Notes: Quiz logic, scoring, and feedback functions correctly.
+No syntax errors
 
-4️⃣ Functional (Manual) Testing
-Test	Steps	Expected Outcome	Actual Outcome
-Quiz loads	Open index.html or live GitHub Pages URL	First question displayed, score 0	✅ Works
-Answer correct	Select correct answer	Button turns green, score increments by 1	✅ Works
-Answer incorrect	Select incorrect answer	Correct answer turns green, feedback displayed, score does not increment	✅ Works
-Question progression	Wait after answering	Next question automatically displays	✅ Works
-Final score	Complete all questions	“Your final score is X out of 3” shown once, restart button visible	✅ Works
-Restart quiz	Click restart button	Score resets, first question displayed	✅ Works
-How-To navigation	Click “How to Take the Quiz”	Dedicated instructions page opens, link blue	✅ Works
-Responsive design	Resize browser window	Layout remains centered, readable, no horizontal scroll	✅ Works
-Accessibility / UX	Review contrast, headings, button labels	High contrast, clear headings, readable text	✅ Works
+## Functional Testing
 
-5️⃣ Browser Testing
+| Test                 | Expected Result                                               | Outcome |
+| -------------------- | ------------------------------------------------------------- | ------- |
+| Quiz loads           | First question displays with score set to 0                   | Pass    |
+| Correct answer       | Selected button turns green and score increments              | Pass    |
+| Incorrect answer     | Selected button turns red and score remains unchanged         | Pass    |
+| Question progression | Next question loads automatically after selection             | Pass    |
+| Final score          | “Your final score is X out of 10” displays once at completion | Pass    |
+| Restart              | Score resets and questions reshuffle                          | Pass    |
+| Responsive design    | Layout remains readable on smaller screens                    | Pass    |
 
-Browsers tested: Chrome (latest), Firefox (latest)
 
-Outcome: Quiz functions correctly on both browsers
+## Browser Testing
 
-✅ Summary: All code validation and functional tests passed successfully. Quiz behaves exactly as intended across browsers and screen sizes.
+Tested on latest versions of:
 
-Code Validation & Quality Checks
+Google Chrome
 
-Corrected HTML5 void elements (removed trailing slashes on <meta>)
+Mozilla Firefox
 
-Removed unnecessary role="main" from <main>
+The quiz performs consistently across tested browsers.
 
-Fixed invalid <button> inside <a> on How-To page
+## Deployment
 
-All HTML, CSS, and JS pass validation with no errors
-
-Deployment
-
-Project deployed using GitHub Pages
+Project deployed using GitHub Pages.
 
 Steps:
 
-Push the project to GitHub repository
+Push project to GitHub repository
 
-Go to Settings → Pages
+Navigate to Settings → Pages
 
-Select main (or master) branch as source
+Select the main branch as the source
 
-Save to generate live URL
+Save to generate the live site URL
 
-Author
+## Future Improvements
+
+Add question categories
+
+Add difficulty levels
+
+Implement timed quiz mode
+
+Store high scores using localStorage
+
+Expand the question bank
+
+## Author
 
 Alan Baum
 Online Quiz – Project 1
-
-
 

@@ -46,13 +46,23 @@ button {
 
 button.correct {
   background-color: #4CAF50;
-  color: #fff;
+  color: #ffffff;
 }
 
 button.wrong {
-  background-color: #bfbfbf;
-  color: #000;
+  background-color: #f44336;
+  color: #ffffff;
 }
+
+button.selected {
+  outline: 3px solid #000;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
 
 button:hover {
   opacity: 0.85;
